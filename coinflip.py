@@ -23,18 +23,18 @@ def run_bot():
             if comment.id not in cache and isMatch:
                 if comment.id is not notBanned:
             
-                    print("Match Found! Comment id:" + comment.id + " Subreddit: " + comment.subreddit.display_name)
+                    #print("Match Found! Comment id:" + comment.id + " Subreddit: " + comment.subreddit.display_name)
                     randInt = random.randint(0, 1)
                     if randInt == 1:
                         comment.reply("You asked for a coin to be flipped, so I flipped one for you, the result was: **Tails**\n\n ---- \n\n ^This ^bot's ^messages ^aren't ^checked ^often, ^for ^the ^quickest ^response, ^click ^[here](/message/compose?to=lizardsrock4&subject=CoinBot) ^to ^message ^my ^maker \n\n ^Check ^out ^my ^[source](http://github.com/lizardsrock4)")
-                        print("Tails!")
+                        #print("Tails!")
                         cache.append(comment.id)
                     elif randInt == 0:
                         comment.reply("You asked for a coin to be flipped,so I flipped one for you, the result was: **Heads**\n\n ---- \n\n  ^This ^bot's ^messages ^aren't ^checked ^often, ^for ^the ^quickest ^response, ^click ^[here](/message/compose?to=lizardsrock4&subject=CoinBot) ^to ^message ^my ^maker \n\n ^Check ^out ^my ^[source](http://github.com/lizardsrock4)")
-                        print("Heads!")
+                        #print("Heads!")
                         cache.append(comment.id)
                 else:
-                    print("Match found, but comment was in a banned sub")
+                    #print("Match found, but comment was in a banned sub")
     except Exception:
         print("Error")
         run_bot()
