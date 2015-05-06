@@ -35,6 +35,7 @@ def run_bot():
                         cache.append(comment.id)
                 else:
                     #print("Match found, but comment was in a banned sub")
+                    pass
     except Exception:
         print("Error")
         run_bot()
@@ -43,4 +44,3 @@ def cls():
 
 while True:
     run_bot()
-    
