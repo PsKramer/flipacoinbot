@@ -27,7 +27,7 @@ def run_bot():
                     result = random.choice(sides)    #Chooses a side
                     comment.reply("You asked for a coin to be flipped, so I flipped one for you, the result was: **" + result +
                                   "**\n\n ---- \n\n ^This ^bot's ^messages ^aren't ^checked ^often, ^for ^the ^quickest ^response," +
-                                  " ^click ^[here](/message/compose?to=/u/lizardsrock4&subject=FlipACoinBot) ^to ^message ^my ^maker.")    #Replies to the comment with choosen side
+                                  " ^click ^[here](/message/compose?to=/u/lizardsrock4&subject=Bot) ^to ^message ^my ^maker.")    #Replies to the comment with choosen side
                     cache.append(comment.id)    #Adds comment to cache so it won't be replied to again
                 else:
                     #print("Match found, but comment was in a banned sub")    #Debugging
