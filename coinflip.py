@@ -1,40 +1,31 @@
-import praw, time, random
+import praw, random
 
+UA = "User-Agent: Python/urllib:coinflip  (by /u/lizardsrock4)"
+triggers = ["flip a coin", "coinflip", "coin flip", "flipacoinbot", "heads or tails"]
+cache = []
 
-r = praw.Reddit(user_agent = "User-Agent: Python/urllib:coinflip  (by /u/lizardsrock4)")
-print("Logging in")
-r.login('flipacoinbot','hunter2')    #Logs In
+def check_condition(c):
+    text = c.body.lower()
+    if any(string in text for string in triggers):
+        if c.id not in cache:
+            return True
+    return False
 
-word_array = ["flip a coin", "flipacoin", "coinflip","coin flip","flipacoinbot"]    #Array of triggers
-cache = []    #Empty array that will store comments that have already been replied to
+def bot_action(c, respond=True):
+    sides = ["Heads", "Tails"]
+    result = random.choice(sides)
 
-banned_subs = ["MechanicalKeyboards", "AskReddit", "legaladvice", "dota2loungebets", "MLS"]    #Array of subs that have requested for the bot to not post to
-
-
-def run_bot():
-    try:
-        print("Starting Stream")
-        stream = praw.helpers.comment_stream(r, "all", limit=None, verbosity=3)    #Starts PRAW stream to find comments that want a coin to be flipped
-        for comment in stream:
-            comment_text = comment.body.lower()
-            isMatch = any(string in comment_text for string in word_array)
-            notBanned = comment.subreddit.display_name in banned_subs
-            if comment.id not in cache and isMatch:    #Checking each comment to see if it is a match and has not already been replied to
-                if comment.id is not notBanned:
-            
-                    #print("Match Found! Comment id:" + comment.id + " Subreddit: " + comment.subreddit.display_name)    #Used for debugging
-                    sides = ["Heads", "Tails"]
-                    result = random.choice(sides)    #Chooses a side
-                    comment.reply("You asked for a coin to be flipped, so I flipped one for you, the result was: **" + result +
-                                  "**\n\n ---- \n\n ^This ^bot's ^messages ^aren't ^checked ^often, ^for ^the ^quickest ^response," +
-                                  " ^click ^[here](/message/compose?to=/u/lizardsrock4&subject=Bot) ^to ^message ^my ^maker.")    #Replies to the comment with choosen side
-                    cache.append(comment.id)    #Adds comment to cache so it won't be replied to again
-                else:
-                    #print("Match found, but comment was in a banned sub")    #Debugging
-                    pass
-    except Exception:    #Catches any messups and restarts bot
-        print("Error")
-        run_bot()
+    if respond:
+        start = "As you have requested, I have flipped a coin, the result was: **"
+        end = "**\n\n ---- \n\n ^This ^bot's ^messages ^aren't ^checked ^often, ^for ^the ^quickest ^response, ^click ^[here](/message/compose?to=/r/flipacoinbot&subject=Bot) ^to ^message ^my ^maker."
+        cache.append((c.reply(start + result + end)).id)
+        cache.append(c.id)
+        
 
 while True:
-    run_bot()
+    r = praw.Reddit(UA)
+    r.login('flipacoinbot','hunter2')
+    
+    for c in praw.helpers.comment_stream(r, 'all'):
+        if check_condition(c):
+            bot_action(c, respond=True)
