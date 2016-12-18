@@ -1,6 +1,15 @@
-# flipacoinbot
+## flipacoinbot
+A reddit bot that flips coins, [/u/flipacoinbot](http://reddit.com/u/flipacoinbot)
 
-[![Join the chat at https://gitter.im/lizardsrock4/flipacoinbot](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lizardsrock4/flipacoinbot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-/u/flipacoinbot
+## Features
+* Scan comments in given subreddit(s)
+* For anyone wanting a coinflip, the bot will flip a virtual coin and reply with the result
 
-A coinflipping reddit bot, [/u/flipacoinbot](http://reddit.com/u/flipacoinbot)
+## Installation
+### Dependencies
+* Python 
+* [PRAW](http://praw.readthedocs.io)
+        pip install praw
+* A reddit app, see below
+### Setting up the reddit app
+coming soon
