@@ -10,7 +10,7 @@ def main():
 	                     user_agent='a coin flipping script',
 	                     username='flipacoinbot',
 	                     password='hunter2')
-	subreddit = reddit.subreddit('all-askreddit')
+	subreddit = reddit.subreddit('all-askreddit-suicidewatch')
 
 	for comment in subreddit.stream.comments():
 		proccess(comment)
@@ -26,4 +26,8 @@ def proccess(comment):
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except:
+        print(error, restarting)
+        main()
