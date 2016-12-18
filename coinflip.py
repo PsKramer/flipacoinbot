@@ -1,31 +1,29 @@
 import praw, random
 
-UA = "User-Agent: Python/urllib:coinflip  (by /u/lizardsrock4)"
-triggers = ["flip a coin", "coinflip", "coin flip", "flipacoinbot", "heads or tails"]
-cache = []
+TRIGGERS = ['flip a coin', 'coinflip', 'flipacoin', 'heads or tails']
+REPLY_TEMP = 'As you requested, I flipped a coin for you, the result was **{}** \n\n --- \n\n ^^For ^^more ^^information/to ^^complain ^^about ^^me, ^^see ^^/r/flipacoinbot'
+SIDES = ['Heads', 'Tails']
 
-def check_condition(c):
-    text = c.body.lower()
-    if any(string in text for string in triggers):
-        if c.id not in cache:
-            return True
-    return False
+def main():
+	reddit = praw.Reddit(client_id='[id]',
+	                     client_secret='[secret]',
+	                     user_agent='a coin flipping script',
+	                     username='flipacoinbot',
+	                     password='hunter2')
+	subreddit = reddit.subreddit('all-askreddit')
 
-def bot_action(c, respond=True):
-    sides = ["Heads", "Tails"]
-    result = random.choice(sides)
+	for comment in subreddit.stream.comments():
+		proccess(comment)
 
-    if respond:
-        start = "As you have requested, I have flipped a coin, the result was: **"
-        end = "**\n\n ---- \n\n ^This ^bot's ^messages ^aren't ^checked ^often, ^for ^the ^quickest ^response, ^click ^[here](/message/compose?to=/r/flipacoinbot&subject=Bot) ^to ^message ^my ^maker."
-        cache.append((c.reply(start + result + end)).id)
-        cache.append(c.id)
-        
+def proccess(comment):
+	normal_comment = comment.body.lower()
+	for  call in TRIGGERS:
+		if call in normal_comment and comment.author != 'flipacoinbot':
+			reply_text = REPLY_TEMP.format(random.choice(SIDES))
+			comment.reply(reply_text)
 
-while True:
-    r = praw.Reddit(UA)
-    r.login('flipacoinbot','hunter2')
-    
-    for c in praw.helpers.comment_stream(r, 'all'):
-        if check_condition(c):
-            bot_action(c, respond=True)
+			break
+
+
+if __name__ == '__main__':
+    main()
