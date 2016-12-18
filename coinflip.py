@@ -25,9 +25,9 @@ def proccess(comment):
 			break
 
 
-if __name__ == '__main__':
+while True:
     try:
         main()
     except:
-        print(error, restarting)
+        print('error, restarting')
         main()
