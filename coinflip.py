@@ -1,7 +1,7 @@
 import praw, random
 
 # Start Vars
-TRIGGERS = ['flip a coin', 'coinflip', 'flipacoin', 'heads or tails']  #What the bot will look for in comments
+TRIGGERS = ['flip a coin', 'coinflip', 'flipacoin']  #What the bot will look for in comments
 REPLY_TEMP = 'As you requested, I flipped a coin for you, the result was **{}** \n\n --- \n\n ^^For ^^more ^^information/to ^^complain ^^about ^^me, ^^see ^^/r/flipacoinbot'  #Reply template, with heads/tails being placed in {}
 SIDES = ['heads', 'tails']
 SUBS = 'all-askreddit-suicidewatch'  #The subreddit(s) that the bot will search in
